@@ -1,3 +1,4 @@
+import time
 import requests 
 from bs4 import BeautifulSoup
 
@@ -40,7 +41,8 @@ def crawl(start_url, max_pages=100):
             continue  # skip
 
         try:
-            response = requests.get(url)
+            headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"}
+            response = requests.get(url, timeout=10, headers=headers)
             soup = BeautifulSoup(response.content, "html.parser")
         
             text = get_page_text(soup)  # get the page
@@ -59,7 +61,8 @@ def crawl(start_url, max_pages=100):
                     to_visit.append(link)  # append new link to: to_visit list
 
         except Exception as e:
-                print(f"Skippinh {url}: {e}") 
+                print(f"Skipping {url}: {e}") 
                 continue           
+        time.sleep(1.5)    # be polite and wait a bit before the next request
 
 crawl("https://umdearborn.edu/academics")
