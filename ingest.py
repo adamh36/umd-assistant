@@ -4,7 +4,7 @@ import os
 import chromadb  # the vector database where we store embeddings
 
 
-def load_documents():
+def load_documents(): # function to read in all the text documents from the data/ directory, which we will later chunk and embed for our knowledge base
     documents = [] # start empty list to hold all the text documents we will read in
     os.listdir('data/') # returns list of all filenames in data/ ( we can loop through it now)
 
@@ -27,7 +27,7 @@ def chunk_text(text, chunk_size=500, overlap=50):# function to split a long text
     return chunks
 
 
-def ingest_to_chromadb(documents):
+def ingest_to_chromadb(documents): # function to take a list of text documents, chunk them, and add the chunks to our ChromaDB collection as individual documents with unique IDs
     client = chromadb.PersistentClient(path="chroma_db")   # create a new ChromaDB client
     collection = client.create_collection("um_assistant")  # get or create a collection named "um_assistant"
     chunk_id = 0

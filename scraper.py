@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def get_page_text(soup):
+def get_page_text(soup): # function to extract the main text content from a BeautifulSoup object representing a webpage, which we will use as the text to chunk and embed for our knowledge base
         main = soup.find("main")
 
         if main:
@@ -15,7 +15,7 @@ def get_page_text(soup):
         result = " ".join(result.split())
         return result
 
-def get_links(soup):
+def get_links(soup): # function to extract all the relevant links from a BeautifulSoup object representing a webpage, which we will use to find more pages to crawl on the UMD website
         links = []
         for a_tag in soup.find_all("a", href = True): # finds every <a> tag that actually has an href, skips empty ones
                 href = a_tag['href'] #  pulls the URL string out of the tag, like opening an envelope to read the address
@@ -30,7 +30,7 @@ def get_links(soup):
 
         return links
     
-def crawl(start_url, max_pages=100):
+def crawl(start_url, max_pages=100): # function to crawl the website starting from a given URL, with a limit on the maximum number of pages to visit
     visited = set()
     to_visit = [start_url]  # start with one URL to visit
     
