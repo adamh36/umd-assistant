@@ -15,8 +15,6 @@ def load_documents():
     
     return documents
 
-docs = load_documents()
-print(len(docs))
 
 def chunk_text(text, chunk_size=500, overlap=50):# function to split a long text into smaller chunks, with some overlap between them
     chunks = [] # start with an empty list to hold the chunks
@@ -28,8 +26,27 @@ def chunk_text(text, chunk_size=500, overlap=50):# function to split a long text
         start += chunk_size - overlap  # move forward by chunk_size minus the overlap
     return chunks
 
-# Example usage:
-sample = "hello " * 200  # 1200 chars of text
-chunks = chunk_text(sample)
-print(len(chunks))
-print(chunks[0][:50])  # first chunk preview
+
+def ingest_to_chromadb(documents):
+    client = chromadb.PersistentClient(path="chroma_db")   # create a new ChromaDB client
+    collection = client.create_collection("um_assistant")  # get or create a collection named "um_assistant"
+    chunk_id = 0
+
+    for doc in documents:
+        chunks = chunk_text(doc)  # split the document into chunks
+        for chunk in chunks: # loop through each chunk and add it to the ChromaDB collection
+            collection.add(
+
+                documents=[chunk],  # add the chunk as a document to the collection
+                ids = [f"chunk_{chunk_id}"] # give each chunk a unique ID, like "chunk_0", "chunk_1", etc.
+
+                )
+            chunk_id += 1 # increment the chunk_id for the next chunk
+            if chunk_id % 20 == 0:
+                print(f"Ingested {chunk_id} chunks...")
+
+    print(f"Done — {chunk_id} total chunks ingested")
+
+docs = load_documents()
+ingest_to_chromadb(docs)
+print("Done")
