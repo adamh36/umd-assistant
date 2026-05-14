@@ -1,12 +1,13 @@
 # Chunker 
 
 import os
-import chromadb  # the vector database where we store embeddings
+from langchain_chroma import Chroma
+from langchain_community.embeddings import FastEmbedEmbeddings
 
+embeddings = FastEmbedEmbeddings()
 
 def load_documents(): # function to read in all the text documents from the data/ directory, which we will later chunk and embed for our knowledge base
     documents = [] # start empty list to hold all the text documents we will read in
-    os.listdir('data/') # returns list of all filenames in data/ ( we can loop through it now)
 
     for filename in os.listdir('data/'): # loop through each filename in the data/ directory
         with open(f"data/{filename}", 'r') as file: # open the file for reading, using a context manager (with) to ensure it gets closed properly
@@ -27,25 +28,15 @@ def chunk_text(text, chunk_size=500, overlap=50):# function to split a long text
     return chunks
 
 
-def ingest_to_chromadb(documents): # function to take a list of text documents, chunk them, and add the chunks to our ChromaDB collection as individual documents with unique IDs
-    client = chromadb.PersistentClient(path="chroma_db")   # create a new ChromaDB client
-    collection = client.create_collection("um_assistant")  # get or create a collection named "um_assistant"
-    chunk_id = 0
-
+def ingest_to_chromadb(documents): 
+    chunks_list = [] # start with an empty list to hold all the chunks from all the documents
     for doc in documents:
-        chunks = chunk_text(doc)  # split the document into chunks
-        for chunk in chunks: # loop through each chunk and add it to the ChromaDB collection
-            collection.add(
+        chunks = chunk_text(doc) #
+        for chunk in chunks:
+            chunks_list.append(chunk) # add each chunk to the chunks_list, so we end up with a single list of all the chunks from all the documents
 
-                documents=[chunk],  # add the chunk as a document to the collection
-                ids = [f"chunk_{chunk_id}"] # give each chunk a unique ID, like "chunk_0", "chunk_1", etc.
+    Chroma.from_texts(chunks_list, embedding=embeddings, collection_name="um_assistant", persist_directory="chroma_db") # create a new ChromaDB collection called "um_assistant" and populate it with the chunks from our documents, using the HuggingFaceEmbeddings to generate embeddings for each chunk
 
-                )
-            chunk_id += 1 # increment the chunk_id for the next chunk
-            if chunk_id % 20 == 0:
-                print(f"Ingested {chunk_id} chunks...")
-
-    print(f"Done — {chunk_id} total chunks ingested")
 
 docs = load_documents()
 ingest_to_chromadb(docs)
