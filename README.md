@@ -8,7 +8,7 @@ Students can ask natural language questions about UM-Dearborn: admissions, acade
 
 ## How it works
 - **Scraper** crawls 100+ pages from umdearborn.edu, extracts clean text using BeautifulSoup, and saves each page as a `.txt` file
-- **Ingest pipeline** splits each page into 500-character chunks with 50-character overlap, converts them to vector embeddings using FastEmbed, and stores all 1,370 chunks in ChromaDB via LangChain
+- **Ingest pipeline** splits each page into 500-character chunks with 50-character overlap, converts them to vector embeddings using FastEmbed, and stores all chunks in ChromaDB via LangChain
 - **Query** takes the student's question, converts it to an embedding, and searches ChromaDB for the 3 most semantically similar chunks
 - **Claude** receives those chunks as context via a LangChain LCEL chain and generates a natural language answer with no hallucination, only what's in the data
 
