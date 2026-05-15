@@ -31,7 +31,7 @@ def chunk_text(text, chunk_size=500, overlap=50):# function to split a long text
 def ingest_to_chromadb(documents): 
     chunks_list = [] # start with an empty list to hold all the chunks from all the documents
     for doc in documents:
-        chunks = chunk_text(doc) #
+        chunks = chunk_text(doc) # call our chunk_text function to split the document into smaller chunks, which will help us create more manageable pieces of text for embedding and retrieval in our knowledge base
         for chunk in chunks:
             chunks_list.append(chunk) # add each chunk to the chunks_list, so we end up with a single list of all the chunks from all the documents
 
