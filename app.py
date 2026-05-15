@@ -109,6 +109,9 @@ with st.sidebar: # create a sidebar for the app, which will contain an image, so
     st.markdown("• ChromaDB")
     st.markdown("---")
     st.markdown("*Data sourced from umdearborn.edu*")
+    st.markdown("---")
+    st.markdown("⚠️ **Disclaimer**")
+    st.markdown("This tool is not affiliated with or endorsed by the University of Michigan-Dearborn. Responses are AI-generated and may contain errors. Always verify important information with official UMD sources.")
 
 # main content
 st.markdown("""
