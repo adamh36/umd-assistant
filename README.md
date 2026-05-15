@@ -1,6 +1,8 @@
 # 〽️ UMD Student Assistant
 An AI-powered chatbot that answers questions about the University of Michigan-Dearborn using a RAG (Retrieval-Augmented Generation) pipeline built with LangChain.
 
+https://umd-assistant.streamlit.app/
+
 ## What it does
 Students can ask natural language questions about UM-Dearborn: admissions, academics, campus life, financial aid, campus safety, and more and get accurate answers pulled directly from the university's website.
 
