@@ -21,40 +21,29 @@ Students can ask natural language questions about UM-Dearborn: admissions, acade
 
 ## Setup
 ```bash
-# Clone the repo
 git clone https://github.com/adamh36/umd-assistant.git
 cd umd-assistant
-
-# Create virtual environment
 python3 -m venv .venv
 source .venv/bin/activate
-
-# Install dependencies
 pip install -r requirements.txt
-
-# Add your API key
 echo "ANTHROPIC_API_KEY=your-key-here" > .env
-
-# Run the scraper (optional - data already included)
 python scraper.py
-
-# Build the vector database
 python ingest.py
-
-# Launch the app
 streamlit run app.py
 ```
 
 ## Project structure
+```
 umd-assistant/
-scraper.py      → crawls umdearborn.edu, saves pages to /data
-ingest.py       → chunks text, embeds with FastEmbed, stores in ChromaDB via LangChain
-rag.py          → defines LangChain LCEL chain with prompt template and generate_response()
-app.py          → Streamlit UI, calls generate_response() from rag.py
-data/           → scraped text files from 100+ UMD pages
-images/         → UI assets
-chroma_db/      → persistent vector database (gitignored)
-.env            → API keys (gitignored)
+  scraper.py      → crawls umdearborn.edu, saves pages to /data
+  ingest.py       → chunks text, embeds with FastEmbed, stores in ChromaDB via LangChain
+  rag.py          → defines LangChain LCEL chain with prompt template and generate_response()
+  app.py          → Streamlit UI, calls generate_response() from rag.py
+  data/           → scraped text files from 100+ UMD pages
+  images/         → UI assets
+  chroma_db/      → persistent vector database (gitignored)
+  .env            → API keys (gitignored)
+```
 
 ## Future improvements
 - Re-indexing pipeline to auto-update when UMD website changes
