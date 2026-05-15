@@ -103,6 +103,9 @@ with st.sidebar: # create a sidebar for the app, which will contain an image, so
     st.markdown("### 〽️ UMD Assistant")
     st.markdown("Ask anything about University of Michigan-Dearborn — admissions, programs, campus life, and more.")
     st.markdown("---")
+    st.markdown("⚠️ **Disclaimer**")
+    st.markdown("This tool is not affiliated with or endorsed by the University of Michigan-Dearborn. Responses are AI-generated and may contain errors. Always verify important information with official UMD sources.")
+    st.markdown("---")
     st.markdown("**Powered by**")
     st.markdown("• Claude AI (Anthropic)")
     st.markdown("• RAG Pipeline")
@@ -110,8 +113,6 @@ with st.sidebar: # create a sidebar for the app, which will contain an image, so
     st.markdown("---")
     st.markdown("*Data sourced from umdearborn.edu*")
     st.markdown("---")
-    st.markdown("⚠️ **Disclaimer**")
-    st.markdown("This tool is not affiliated with or endorsed by the University of Michigan-Dearborn. Responses are AI-generated and may contain errors. Always verify important information with official UMD sources.")
 
 # main content
 st.markdown("""
