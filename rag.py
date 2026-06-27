@@ -9,6 +9,13 @@ from langchain_community.chat_message_histories import ChatMessageHistory
 
 load_dotenv()
 
+import os
+import streamlit as st
+
+# Load from Streamlit secrets if available, otherwise fall back to .env
+if "ANTHROPIC_API_KEY" in st.secrets:
+    os.environ["ANTHROPIC_API_KEY"] = st.secrets["ANTHROPIC_API_KEY"]
+
 embeddings = FastEmbedEmbeddings() # initialize the HuggingFaceEmbeddings class with the specified model, which we will use to generate embeddings for our text chunks
 collection = Chroma(persist_directory="chroma_db", collection_name="um_assistant", embedding_function=embeddings)
 llm = ChatAnthropic(model="claude-sonnet-4-20250514")
