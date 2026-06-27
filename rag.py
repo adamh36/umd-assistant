@@ -18,7 +18,7 @@ if "ANTHROPIC_API_KEY" in st.secrets:
 
 embeddings = FastEmbedEmbeddings() # initialize the HuggingFaceEmbeddings class with the specified model, which we will use to generate embeddings for our text chunks
 collection = Chroma(persist_directory="chroma_db", collection_name="um_assistant", embedding_function=embeddings)
-llm = ChatAnthropic(model="claude-sonnet-4-20250514")
+llm = ChatAnthropic(model="claude-sonnet-4-6")
 
 template = ChatPromptTemplate.from_messages([
     ("system", "You are a helpful assistant for University of Michigan Dearborn students, "
